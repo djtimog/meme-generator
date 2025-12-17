@@ -90,7 +90,7 @@ export function ImageActionButtons({
   ];
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-5">
       {IconStatus.map((icon) => (
         <IconButton key={icon.label} icon={icon} disabled={disabled} />
       ))}
@@ -117,8 +117,7 @@ const IconButton = ({
     setIconStatus("Pending");
     await action();
     setIconStatus("Final");
-
-    clearTimeout(setTimeout(() => setIconStatus("Initial"), 2000));
+    setTimeout(() => setIconStatus("Initial"), 2000);
   };
 
   return (
