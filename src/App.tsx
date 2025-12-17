@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
-import { ImageActionButtons } from "./components/Image-action-btn";
+import { ImageActionButtons } from "./components/ActionButton";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";

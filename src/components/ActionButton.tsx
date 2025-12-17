@@ -1,4 +1,10 @@
-import { Forward, Copy, ArrowDownToLine, Share } from "lucide-react";
+import {
+  Forward,
+  Copy,
+  ArrowDownToLine,
+  type LucideIcon,
+  Check,
+} from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import { Button } from "./ui/button";
 import { useState } from "react";
@@ -11,8 +17,6 @@ export function ImageActionButtons({
   disabled?: boolean;
   canvaRef: HTMLDivElement;
 }) {
-  const [isLoading, setIsLoading] = useState<boolean[]>([false, false, false]);
-
   const getCanvaImageUrl = async () => {
     return await html2canvas(canvaRef, { useCORS: true }).then((canva) => {
       const dataURL = canva.toDataURL("image/png");
@@ -85,30 +89,53 @@ export function ImageActionButtons({
     },
   ];
 
-  const handleClick = async (action: () => Promise<void>, index: number) => {
-    setIsLoading((loadingsPrev) =>
-      loadingsPrev.map((loading, i) => (i === index ? true : loading))
-    );
-    await action();
-    setIsLoading((loadingsPrev) =>
-      loadingsPrev.map((loading, i) => (i === index ? false : loading))
-    );
-  };
-
   return (
     <div className="flex gap-3">
-      {IconStatus.map((icon, index) => (
-        <Button
-          key={icon.label}
-          disabled={disabled || isLoading[index]}
-          value={icon.label}
-          size={"icon"}
-          onClick={() => handleClick(icon.action, index)}
-          aria-label={`Toggle ${icon.label}`}
-        >
-          {isLoading[index] ? <Spinner /> : <icon.icon className="h-4 w-4" />}
-        </Button>
+      {IconStatus.map((icon) => (
+        <IconButton key={icon.label} icon={icon} disabled={disabled} />
       ))}
     </div>
   );
 }
+
+const IconButton = ({
+  icon,
+  disabled,
+}: {
+  icon: {
+    icon: LucideIcon;
+    label: string;
+    action: () => Promise<void>;
+  };
+  disabled?: boolean;
+}) => {
+  const [iconStatus, setIconStatus] = useState<"Initial" | "Pending" | "Final">(
+    "Initial"
+  );
+
+  const handleClick = async (action: () => Promise<void>) => {
+    setIconStatus("Pending");
+    await action();
+    setIconStatus("Final");
+
+    clearTimeout(setTimeout(() => setIconStatus("Initial"), 2000));
+  };
+
+  return (
+    <Button
+      disabled={disabled || iconStatus === "Pending"}
+      value={icon.label}
+      size={"icon"}
+      onClick={() => handleClick(icon.action)}
+      aria-label={`Toggle ${icon.label}`}
+    >
+      {iconStatus === "Final" ? (
+        <Check className="h-4 w-4" />
+      ) : iconStatus === "Pending" ? (
+        <Spinner />
+      ) : (
+        <icon.icon className="h-4 w-4" />
+      )}
+    </Button>
+  );
+};
