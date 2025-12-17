@@ -116,7 +116,8 @@ function App() {
       position: { x: 50, y: 50 },
       styles: {
         fontWeight: "700",
-        fontSize: "var(--text-lg)",
+        fontSize: "var(--text-xl)",
+        color: "black",
       },
     };
     setTexts([...texts, newText]);
