@@ -308,7 +308,7 @@ function App() {
                       </div>
                     </div>
 
-                    <div className="flex gap-10 items-end flex-wrap">
+                    <div className="flex gap-7 items-end flex-wrap">
                       <div className="space-y-2">
                         <Label>Font Weight</Label>
 
