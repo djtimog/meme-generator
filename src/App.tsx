@@ -281,7 +281,7 @@ function App() {
                       disabled={!selectedTextId && texts.length === 0}
                     />
 
-                    <div className="flex justify-between items-center">
+                    <div className="flex flex-wrap gap-10 justify-between items-center">
                       <div className="w-full space-y-2">
                         <Label htmlFor="color">Text Color</Label>
                         <HexColorPicker
@@ -308,7 +308,7 @@ function App() {
                       </div>
                     </div>
 
-                    <div className="flex gap-10 items-end">
+                    <div className="flex gap-10 items-end flex-wrap">
                       <div className="space-y-2">
                         <Label>Font Weight</Label>
 
@@ -321,7 +321,7 @@ function App() {
                             )
                           }
                         >
-                          <SelectTrigger className="w-36">
+                          <SelectTrigger className="w-32">
                             <SelectValue placeholder="Select Weight" />
                           </SelectTrigger>
 
@@ -349,7 +349,7 @@ function App() {
                             changeStyle({ fontSize: value }, selectedTextId)
                           }
                         >
-                          <SelectTrigger className="w-36">
+                          <SelectTrigger className="w-32">
                             <SelectValue placeholder="Select Size" />
                           </SelectTrigger>
 

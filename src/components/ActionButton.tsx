@@ -90,7 +90,7 @@ export function ImageActionButtons({
   ];
 
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-3">
       {IconStatus.map((icon) => (
         <IconButton key={icon.label} icon={icon} disabled={disabled} />
       ))}
