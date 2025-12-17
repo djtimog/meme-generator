@@ -195,10 +195,13 @@ function App() {
                         width: 150,
                         height: 50,
                       }}
-                      onDragStop={(_, { x, y }) =>
-                        updateText(item.id, { position: { x, y } })
-                      }
+                      onDragStop={(_, { x, y }) => {
+                        setSelectedTextId(item.id);
+                        return updateText(item.id, { position: { x, y } });
+                      }}
                       onResizeStop={(_, __, ref, ___, pos) => {
+                        setSelectedTextId(item.id);
+
                         updateText(item.id, {
                           styles: {
                             width: ref.style.width,
