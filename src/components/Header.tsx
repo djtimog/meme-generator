@@ -6,7 +6,7 @@ export default function Header() {
       <div className="container p-3 flex justify-between md:px-10 mx-auto">
         <div className="flex justify-center items-center gap-3">
           <img src="logo.png" alt="This is the app Logo" className="size-10" />
-          <p className="font-bold text-2xl">Meme Generator</p>
+          <p className="font-bold text-2xl">MemeForger</p>
         </div>
         <ModeToggle />
       </div>
