@@ -217,6 +217,7 @@ function App() {
                           });
                         }}
                         onFocus={() => setSelectedTextId(item.id)}
+                        onClick={() => setSelectedTextId(item.id)}
                         style={{
                           ...item.styles,
                           backgroundColor: colorConverter(
