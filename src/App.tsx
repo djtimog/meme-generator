@@ -172,7 +172,6 @@ function App() {
   return (
     <>
       <Header />
-      <GoogleAd slot="1234567890" />
 
       <main className="">
         <section className="m-10 text-center space-y-10">
