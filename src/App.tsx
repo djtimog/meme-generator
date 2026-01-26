@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./components/ui/select";
-import GoogleAd from "./components/GoogleAd";
+
 
 interface Meme {
   id: string;
@@ -188,7 +188,7 @@ function App() {
                     crossOrigin="anonymous"
                     className="object-contain h-full w-full"
                   />
-                  <GoogleAd slot="TOP_BANNER" />
+                
 
                   {texts.map((item) => (
                     <Rnd
@@ -390,7 +390,7 @@ function App() {
               </div>
             </div>
           </div>
-          <GoogleAd slot="BOTTOM_BANNER" />
+          
         </section>
       </main>
     </>
