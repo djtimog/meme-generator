@@ -1,0 +1,79 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js (uses nvm-compatible version pinning)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Run linter (optional — remove if you don't have one set up)
+      - name: Lint
+        run: npm run lint --if-present
+
+      # 5. Run tests (optional — remove if no tests yet)
+      - name: Test
+        run: npm test --if-present
+
+      # 6. Build the Vite app
+      - name: Build
+        run: npm run build
+        env:
+          # Add your Vite env vars here, stored as GitHub Secrets
+          # VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          NODE_ENV: production
+
+      # 7. Deploy dist/ folder to VPS via SSH
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }} # defaults to 22 if not set
+          script: |
+            # Pull latest build artifacts into the web root
+            # Adjust the path below to match your server's setup
+            rm -rf /var/www/your-app/dist
+            mkdir -p /var/www/your-app/dist
+
+      - name: Upload build artifacts to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          source: "dist/*"
+          target: "/var/www/your-app/dist"
+          strip_components: 1
+
+      # 8. Reload web server (nginx example — swap for apache/caddy if needed)
+      - name: Reload nginx
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: sudo systemctl reload nginx
