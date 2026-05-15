@@ -17,7 +17,6 @@ import {
   SelectValue,
 } from "./components/ui/select";
 
-
 interface Meme {
   id: string;
   name: string;
@@ -188,7 +187,6 @@ function App() {
                     crossOrigin="anonymous"
                     className="object-contain h-full w-full"
                   />
-                
 
                   {texts.map((item) => (
                     <Rnd
@@ -229,7 +227,7 @@ function App() {
                         style={{
                           ...item.styles,
                           backgroundColor: colorConverter(
-                            item.styles?.backgroundColor
+                            item.styles?.backgroundColor,
                           ),
                         }}
                       >
@@ -279,8 +277,8 @@ function App() {
                           prevTexts.map((text) =>
                             text.id === selectedTextId
                               ? { ...text, content: e.target.value }
-                              : text
-                          )
+                              : text,
+                          ),
                         )
                       }
                       disabled={!selectedTextId && texts.length === 0}
@@ -306,7 +304,7 @@ function App() {
                           onChange={(color) =>
                             changeStyle(
                               { backgroundColor: color },
-                              selectedTextId
+                              selectedTextId,
                             )
                           }
                         />
@@ -322,7 +320,7 @@ function App() {
                           onValueChange={(value) =>
                             changeStyle(
                               { fontWeight: value as FontWeight },
-                              selectedTextId
+                              selectedTextId,
                             )
                           }
                         >
@@ -390,7 +388,10 @@ function App() {
               </div>
             </div>
           </div>
-          
+
+          <footer className="py-6 text-center text-sm text-muted-foreground">
+            <p>© 2023 Meme Generator. All rights reserved.</p>
+          </footer>
         </section>
       </main>
     </>
