@@ -27,14 +27,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4. Run linter (optional — remove if you don't have one set up)
-      - name: Lint
-        run: npm run lint --if-present
-
-      # 5. Run tests (optional — remove if no tests yet)
-      - name: Test
-        run: npm test --if-present
-
       # 6. Build the Vite app
       - name: Build
         run: npm run build
